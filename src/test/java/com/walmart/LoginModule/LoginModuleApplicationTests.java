@@ -7,8 +7,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -16,6 +23,9 @@ public class LoginModuleApplicationTests {
 
 	@Autowired
 	private MockMvc mockMvc;
+
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Test
 	public void test_ValidCredentials() throws Exception {
@@ -50,4 +60,94 @@ public class LoginModuleApplicationTests {
 				.andExpect(status().isUnauthorized())
 				.andExpect(jsonPath("$.message").value("Bad credentials"));
 	}
+
+	@Test
+	public void test_SignupWithUniqueData() throws Exception {
+		String requestBody = "{\"username\": \"prem1\",\"email\": \"prem1@gmail.com\",\"phone\": \"9843030002\",\"password\": \"123456\",\"name\": {\"firstName\": \"Arun\",\"lastName\": \"Balaji\"},\"roles\": [\"guest\"],\"gender\": \"male\",\"address\": {\"no\": \"34/0A1\",\"street1\": \"3rd Cross Street\",\"street2\": \"Vellore main road\",\"city\": \"Arcot\",\"pincode\": 632503}}";
+
+		mockMvc.perform(post("/api/auth/signup")
+						.content(requestBody)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.message").value("User registered successfully !!!"));
+	}
+
+	@Test
+	public void test_SignupWithExistingUsername() throws Exception {
+		String requestBody = "{\"username\": \"arunperumal1\", \"email\": \"valid_email@gmail.com\", \"phone\": \"1234567890\",\"password\": \"123456\",\"gender\": \"male\"}";
+
+		mockMvc.perform(post("/api/auth/signup")
+						.content(requestBody)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.message").value("Error: Username is already taken!"));
+	}
+
+	@Test
+	public void test_SignupWithExistingEmail() throws Exception {
+		String requestBody = "{\"username\": \"valid_user\", \"email\": \"arun.perumal1@gmail.com\", \"phone\": \"1234567890\",\"password\": \"123456\",\"gender\": \"male\"}";
+
+		mockMvc.perform(post("/api/auth/signup")
+						.content(requestBody)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.message").value("Error: Email is already in use!"));
+	}
+
+	@Test
+	public void test_SignupWithExistingPhone() throws Exception {
+		String requestBody = "{\"username\": \"valid_user\", \"email\": \"valid_email@gmail.com\", \"phone\": \"9943030001\",\"password\": \"123456\",\"gender\": \"male\"}";
+
+		mockMvc.perform(post("/api/auth/signup")
+						.content(requestBody)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.message").value("Error: Phone number already in use!"));
+	}
+
+	@Test
+	public void test_SignInAndAccessPage() throws Exception {
+
+		String requestBody = "{\"email\": \"arun777@gmail.com\", \"password\": \"123456\"}";
+		// Sign in to get JWT token
+		MvcResult signInResult = mockMvc.perform(post("/api/auth/signin")
+						.content(requestBody)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(header().exists("Set-Cookie"))
+				.andReturn();
+
+		String token = signInResult.getResponse().getHeader("Set-Cookie");
+
+		// Use the obtained token to access a secure page
+		mockMvc.perform(get("/api/test/role")
+						.header("Cookie", token))
+				.andExpect(status().isOk());
+//				.andExpect(jsonPath("$.message").value("Access granted"));
+	}
+
+	@Test
+	public void test_AccessPageWithoutToken() throws Exception {
+		mockMvc.perform(get("/api/test/user"))
+				.andExpect(status().isUnauthorized());
+	}
+
+	@Test
+	public void test_AccessPageWithInvalidToken() throws Exception {
+		String requestBody = "{\"email\": \"arun777@gmail.com\", \"password\": \"123456\"}";
+		// Sign in to get JWT token
+		MvcResult signInResult = mockMvc.perform(post("/api/auth/signin")
+						.content(requestBody)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(header().exists("Set-Cookie"))
+				.andReturn();
+
+		String token = signInResult.getResponse().getCookie("Token").toString();
+
+		mockMvc.perform(get("/api/test/verify_admin")
+						.header("Cookie", token))
+				.andExpect(status().isUnauthorized());
+	}
 }
+
