@@ -27,6 +27,10 @@ public class LoginModuleApplicationTests {
 	@Autowired
 	private ObjectMapper objectMapper;
 
+	private String name = "prem4";
+	private String email = "prem4@gmail.com";
+	private String num = "9843030004";
+
 	@Test
 	public void test_ValidCredentials() throws Exception {
 		String requestBody = "{\"email\": \"arun777@gmail.com\", \"password\": \"123456\"}";
@@ -62,8 +66,8 @@ public class LoginModuleApplicationTests {
 	}
 
 	@Test
-	public void test_SignupWithUniqueData() throws Exception {
-		String requestBody = "{\"username\": \"prem1\",\"email\": \"prem1@gmail.com\",\"phone\": \"9843030002\",\"password\": \"123456\",\"name\": {\"firstName\": \"Arun\",\"lastName\": \"Balaji\"},\"roles\": [\"guest\"],\"gender\": \"male\",\"address\": {\"no\": \"34/0A1\",\"street1\": \"3rd Cross Street\",\"street2\": \"Vellore main road\",\"city\": \"Arcot\",\"pincode\": 632503}}";
+	public void test_SignupWithValidData() throws Exception {
+		String requestBody = "{\"username\": \""+name+"\",\"email\": \""+email+"\",\"phone\": \""+num+"\",\"password\": \"123456\",\"name\": {\"firstName\": \"Arun\",\"lastName\": \"Balaji\"},\"roles\": [\"guest\"],\"gender\": \"male\",\"address\": {\"no\": \"34/0A1\",\"street1\": \"3rd Cross Street\",\"street2\": \"Vellore main road\",\"city\": \"Arcot\",\"pincode\": 632503}}";
 
 		mockMvc.perform(post("/api/auth/signup")
 						.content(requestBody)

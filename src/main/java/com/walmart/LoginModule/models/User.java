@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Document(collection = "User_List")
-//@Document(collection = "users")
 public class User {
   @Id
   private String id;
@@ -25,11 +24,6 @@ public class User {
   @Size(max = 50)
   @Email
   private String email;
-
-
-//  @NotBlank
-//  @Size(max = 20)
-//  private String username;
 
   @NotBlank
   @Size(max = 120)
@@ -48,17 +42,6 @@ public class User {
 
   //public String amount;
   public Namee name;
-
-//  public User(String username, String email, String password,Namee name, String gender, String phone, Address address, String amount) {
-//    this.username = username;
-//    this.email = email;
-//    this.password = password;
-//    this.name = name;
-//    this.gender = gender;
-//    this.phone = phone;
-//    this.address = address;
-//    this.amount = amount;
-//  }
 
   public User(String username, String email, String password,Namee name, String gender, String phone, Address address) {
     this.username = username;

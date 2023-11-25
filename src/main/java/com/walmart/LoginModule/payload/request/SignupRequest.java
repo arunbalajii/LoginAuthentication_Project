@@ -2,7 +2,7 @@ package com.walmart.LoginModule.payload.request;
 
 import com.walmart.LoginModule.models.Address;
 import com.walmart.LoginModule.models.Namee;
-import jakarta.validation.constraints.Email;
+//import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -15,7 +15,6 @@ public class SignupRequest {
 
   @NotBlank
   @Size(max = 50)
-  @Email
   private String email;
 
   private Set<String> roles;
