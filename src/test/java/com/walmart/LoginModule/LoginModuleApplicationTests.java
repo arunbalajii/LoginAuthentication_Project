@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -11,11 +12,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+//import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+//import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -24,12 +26,12 @@ public class LoginModuleApplicationTests {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@Autowired
-	private ObjectMapper objectMapper;
+//	@Autowired
+//	private ObjectMapper objectMapper;
 
-	private String name = "prem4";
-	private String email = "prem4@gmail.com";
-	private String num = "9843030004";
+	private String name = "prem9";
+	private String email = "prem9@gmail.com";
+	private String num = "9843030009";
 
 	@Test
 	public void test_ValidCredentials() throws Exception {
@@ -109,10 +111,11 @@ public class LoginModuleApplicationTests {
 				.andExpect(jsonPath("$.message").value("Error: Phone number already in use!"));
 	}
 
+	//Test//////////////////////
 	@Test
 	public void test_SignInAndAccessPage() throws Exception {
 
-		String requestBody = "{\"email\": \"arun777@gmail.com\", \"password\": \"123456\"}";
+		String requestBody = "{\"email\": \"arun.perumal5@gmail.com\", \"password\": \"123456\"}";
 		// Sign in to get JWT token
 		MvcResult signInResult = mockMvc.perform(post("/api/auth/signin")
 						.content(requestBody)
@@ -121,18 +124,28 @@ public class LoginModuleApplicationTests {
 				.andExpect(header().exists("Set-Cookie"))
 				.andReturn();
 
-		String token = signInResult.getResponse().getHeader("Set-Cookie");
+		String token = signInResult.getResponse().getCookie("Token").getValue(); //only token
+
+		//2
+//		HttpHeaders header = new HttpHeaders();
+////		header.add("Cookie","Token="+token);
+//		header.add(HttpHeaders.COOKIE,token);
+//		header.add(HttpHeaders.CONTENT_TYPE,MediaType.TEXT_PLAIN_VALUE);
+//		header.add(HttpHeaders.COOKIE,"Token="+token);
 
 		// Use the obtained token to access a secure page
+//		mockMvc.perform(MockMvcRequestBuilders.get("/api/test/role") //role
 		mockMvc.perform(get("/api/test/role")
-						.header("Cookie", token))
+						.header("Cookie", "Token="+token))
+//				.contentType(MediaType.APPLICATION_JSON))
+//						.headers(header)) //2
 				.andExpect(status().isOk());
 //				.andExpect(jsonPath("$.message").value("Access granted"));
 	}
 
 	@Test
 	public void test_AccessPageWithoutToken() throws Exception {
-		mockMvc.perform(get("/api/test/user"))
+		mockMvc.perform(get("/api/test/guest"))
 				.andExpect(status().isUnauthorized());
 	}
 

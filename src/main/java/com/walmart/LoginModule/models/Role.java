@@ -13,22 +13,22 @@ public class Role {
   public Role() {
 
   }
-
-  public Role(ERole name) {
-    this.name = name;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public void setName(ERole name) {
-    this.name = name;
-  }
+//
+//  public Role(ERole name) {
+//    this.name = name;
+//  }
+//
+//  public String getId() {
+//    return id;
+//  }
+//
+//  public void setId(String id) {
+//    this.id = id;
+//  }
+//
+//  public void setName(ERole name) {
+//    this.name = name;
+//  }
 
   public ERole getName() {
     return name;

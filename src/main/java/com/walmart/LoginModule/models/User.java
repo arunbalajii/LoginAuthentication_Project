@@ -53,21 +53,21 @@ public class User {
     this.address = address;
   }
 
-  public String getValidated() {
-    return validated;
-  }
+//  public String getValidated() {
+//    return validated;
+//  }
 
   public void setValidated(String validated) {
     this.validated = validated;
   }
 
-  public Namee getNamee() {
-    return name;
-  }
-
-  public void setNamee(Namee name) {
-    this.name = name;
-  }
+//  public Namee getNamee() {
+//    return name;
+//  }
+//
+//  public void setNamee(Namee name) {
+//    this.name = name;
+//  }
 
   public String getUsername() {
     return username;
@@ -78,27 +78,27 @@ public class User {
   }
 
 
-  public Address getAddress() {
-    return address;
-  }
-
-  public void setAddress(Address address) {
-    this.address = address;
-  }
+//  public Address getAddress() {
+//    return address;
+//  }
+//
+//  public void setAddress(Address address) {
+//    this.address = address;
+//  }
 
   public String getId() {
     return id;
   }
 
-  public String getGender(){return gender;}
-
-  public void setGender(String gender) {
-    this.gender = gender;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
+//  public String getGender(){return gender;}
+//
+//  public void setGender(String gender) {
+//    this.gender = gender;
+//  }
+//
+//  public void setId(String id) {
+//    this.id = id;
+//  }
 
 
   public String getEmail() {
@@ -125,13 +125,13 @@ public class User {
     this.roles = roles;
   }
 
-  public String getPhone() {
-    return phone;
-  }
-
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
+//  public String getPhone() {
+//    return phone;
+//  }
+//
+//  public void setPhone(String phone) {
+//    this.phone = phone;
+//  }
 }
 
 

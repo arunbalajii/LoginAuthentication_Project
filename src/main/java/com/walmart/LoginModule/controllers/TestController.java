@@ -4,36 +4,38 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Map;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/test")
 public class TestController {
 
-  //API can be accessed by any user irrespective of roles
-  @GetMapping("/all")
-  public String allAccess() {
-    return "Public Content.";
-  }
-
-  //API can be accessed by user with any role USER, GUEST, ADMIN
-  @GetMapping("/user")
-  @PreAuthorize("hasRole('USER') or hasRole('GUEST') or hasRole('ADMIN')")
-  public String userAccess() {
-    return "User Page.";
-  }
-
   //GUEST role user can access this API
   @GetMapping("/guest")
   @PreAuthorize("hasRole('GUEST')")
   public String moderatorAccess() {
-    return "Guest Page.";
+        return "Guest Page.";
   }
-
+//  public Map<String, String> getApiEndpointHeaders(HttpServletRequest request, @RequestHeader Map<String, String> requestHeaders) {
+//    // Access headers using HttpServletRequest
+//    Enumeration<String> headerNames = request.getHeaderNames();
+//    while (headerNames.hasMoreElements()) {
+//      String headerName = headerNames.nextElement();
+//      String headerValue = request.getHeader(headerName);
+//      System.out.println("Header Name: " + headerName + ", Header Value: " + headerValue);
+//    }
+//
+//    // Access headers using @RequestHeader annotation
+//    System.out.println("Headers from @RequestHeader annotation: " + requestHeaders);
+//
+//    // You can return a response or any other logic here
+//    return Collections.singletonMap("message", "Headers printed in the console");
+//  }
   //ADMIN role user can access this API
   @GetMapping("/verify_admin")
   @PreAuthorize("hasRole('ADMIN')")
@@ -47,7 +49,6 @@ public class TestController {
     Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
 
     if (authentication1.getName() != "anonymousUser" && authentication1 != null && authentication1.isAuthenticated()){
-      //return ResponseEntity.ok().body(roles.toString());
       return ResponseEntity.ok().body(new MessageResponse(String.valueOf(authentication1.getAuthorities())));
     }
     else {
@@ -56,15 +57,15 @@ public class TestController {
 
   }
 
-  @GetMapping("/home")
-  public ResponseEntity<MessageResponse> homePage(){
-    Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
-    if (authentication1.getName() != "anonymousUser" && authentication1 != null && authentication1.isAuthenticated()){
-      return ResponseEntity.ok().body(new MessageResponse("Welcome, "+authentication1.getName()+"!!"));
-    }
-    else {
-      return ResponseEntity.ok().body(new MessageResponse("Please Login to check your details"));
-
-    }
-  }
+//  @GetMapping("/home")
+//  public ResponseEntity<MessageResponse> homePage(){
+//    Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
+//    if (authentication1.getName() != "anonymousUser" && authentication1 != null && authentication1.isAuthenticated()){
+//      return ResponseEntity.ok().body(new MessageResponse("Welcome, "+authentication1.getName()+"!!"));
+//    }
+//    else {
+//      return ResponseEntity.ok().body(new MessageResponse("Please Login to check your details"));
+//
+//    }
+//  }
 }
