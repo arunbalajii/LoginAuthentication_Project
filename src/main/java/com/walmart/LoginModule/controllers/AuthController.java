@@ -11,6 +11,8 @@ import com.walmart.LoginModule.repository.UserRepository;
 import com.walmart.LoginModule.security.jwt.JwtUtils;
 import com.walmart.LoginModule.security.services.UserDetailsImpl;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -21,15 +23,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+
+  private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
   @Autowired
   AuthenticationManager authenticationManager;
@@ -47,6 +53,7 @@ public class AuthController {
   JwtUtils jwtUtils;
 // ************ Capstone project ************
 
+
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -61,8 +68,11 @@ public class AuthController {
             .map(item -> item.getAuthority())
             .collect(Collectors.toList());
 
+    logger.info("Login successful !!");
+
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
             .body(new MessageResponse("Login successful !!"));
+//    logger.error("===Comment not added to DB as the Review is not approved ===== ");
   }
 
 

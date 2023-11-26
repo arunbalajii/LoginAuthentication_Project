@@ -29,9 +29,9 @@ public class LoginModuleApplicationTests {
 //	@Autowired
 //	private ObjectMapper objectMapper;
 
-	private String name = "prem9";
-	private String email = "prem9@gmail.com";
-	private String num = "9843030009";
+	private String name = "prem10";
+	private String email = "prem10@gmail.com";
+	private String num = "9843030010";
 
 	@Test
 	public void test_ValidCredentials() throws Exception {

@@ -1,11 +1,13 @@
 package com.walmart.LoginModule.security.services;
 
+import com.walmart.LoginModule.models.Namee;
 import com.walmart.LoginModule.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.naming.Name;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -71,8 +73,17 @@ public class UserDetailsImpl  implements UserDetails{
     return username;
   }
 
-
+//  public Namee name;
 //
+//  public Namee getName() {
+//    return name;
+//  }
+//
+//  public void setName(Namee name) {
+//    this.name = name;
+//  }
+
+  //
 //  public Username getUsername() {
 //    return username;
 //  }
