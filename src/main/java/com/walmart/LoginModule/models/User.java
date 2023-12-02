@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.HashSet;
 import java.util.Set;
 
-@Document(collection = "User_List")
+@Document(collection = "User")
 public class User {
   @Id
   private String id;
@@ -42,6 +42,7 @@ public class User {
 
   //public String amount;
   public Namee name;
+
 
   public User(String username, String email, String password,Namee name, String gender, String phone, Address address) {
     this.username = username;
@@ -132,6 +133,21 @@ public class User {
 //  public void setPhone(String phone) {
 //    this.phone = phone;
 //  }
+
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  private Integer userId;
+
+  public Integer getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Integer userId) {
+    this.userId = userId;
+  }
 }
 
 

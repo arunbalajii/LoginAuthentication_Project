@@ -6,6 +6,7 @@ import com.walmart.LoginModule.models.User;
 import com.walmart.LoginModule.payload.request.LoginRequest;
 import com.walmart.LoginModule.payload.request.SignupRequest;
 import com.walmart.LoginModule.payload.response.MessageResponse;
+import com.walmart.LoginModule.payload.response.UserInfoResponse;
 import com.walmart.LoginModule.repository.RoleRepository;
 import com.walmart.LoginModule.repository.UserRepository;
 import com.walmart.LoginModule.security.jwt.JwtUtils;
@@ -24,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -70,8 +72,15 @@ public class AuthController {
 
     logger.info("Login successful !!");
 
+//    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+//            .body(new MessageResponse("Login successful !!"));
+
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-            .body(new MessageResponse("Login successful !!"));
+            .body(new UserInfoResponse(/*userDetails.getId(),*/
+                    userDetails.getUsername(),
+                    userDetails.getEmail(),
+                    roles));
+
 //    logger.error("===Comment not added to DB as the Review is not approved ===== ");
   }
 
@@ -79,22 +88,26 @@ public class AuthController {
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
     if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+      logger.error("Signup: Username already exists !");
       return ResponseEntity
               .badRequest()
               .body(new MessageResponse("Error: Username is already taken!"));
     }
 
     if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+      logger.error("Signup: Email already exists !");
       return ResponseEntity
               .badRequest()
               .body(new MessageResponse("Error: Email is already in use!"));
     }
 
     if (userRepository.existsByPhone(signUpRequest.getPhone())){
+      logger.error("Signup: Phone number already exists !");
       return ResponseEntity
               .badRequest()
               .body(new MessageResponse("Error: Phone number already in use!"));
     }
+
 
 
         User user = new User(signUpRequest.getUsername(),
@@ -131,9 +144,24 @@ public class AuthController {
       });
 
 
+
+
+      if(userRepository.max()!=null) {
+        user.setUserId(userRepository.max()+1); // fetch the max count and insert into cart
+        logger.info("UserID: New UserID created !");
+      }
+      else {
+        logger.info("UserID: First UserID created !");
+        user.setUserId(1);
+      }
+
+
     user.setRoles(roles);
     user.setValidated("NO");
+    logger.info("Validated: User Email not validated !");
+//    user.setUserId(1);
     userRepository.save(user);
+    logger.info("Signup: New User created !");
 
     return ResponseEntity.ok(new MessageResponse("User registered successfully !!!"));
   }

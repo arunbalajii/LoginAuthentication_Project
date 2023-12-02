@@ -29,9 +29,9 @@ public class LoginModuleApplicationTests {
 //	@Autowired
 //	private ObjectMapper objectMapper;
 
-	private String name = "prem10";
-	private String email = "prem10@gmail.com";
-	private String num = "9843030010";
+	private String name = "prem11";
+	private String email = "prem11@gmail.com";
+	private String num = "9843030011";
 
 	@Test
 	public void test_ValidCredentials() throws Exception {
@@ -166,5 +166,7 @@ public class LoginModuleApplicationTests {
 						.header("Cookie", token))
 				.andExpect(status().isUnauthorized());
 	}
+
+	//profile
 }
 

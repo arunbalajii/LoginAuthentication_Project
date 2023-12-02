@@ -33,6 +33,25 @@ public class SignupRequest {
 
   public Namee name;
 
+//  public int id;
+//
+//  public int getId() {
+//    return id;
+//  }
+//
+//  public void setId(int id) {
+//    this.id = id;
+//  }
+
+  private Integer userId;
+
+  public Integer getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Integer userId) {
+    this.userId = userId;
+  }
   public Namee getNamee() {
     return name;
   }
