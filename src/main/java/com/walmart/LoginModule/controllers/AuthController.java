@@ -78,8 +78,8 @@ public class AuthController {
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
             .body(new UserInfoResponse(/*userDetails.getId(),*/
                     userDetails.getUsername(),
-                    userDetails.getEmail(),
-                    roles));
+                    userDetails.getEmail()/*,
+                    roles*/));
 
 //    logger.error("===Comment not added to DB as the Review is not approved ===== ");
   }

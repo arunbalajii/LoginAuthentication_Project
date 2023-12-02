@@ -20,7 +20,6 @@ import java.util.*;
 public class TestController {
 
   private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-
   //GUEST role user can access this API
   @GetMapping("/guest")
   @PreAuthorize("hasRole('GUEST')")
@@ -51,14 +50,13 @@ public class TestController {
     }
 
   }
-}
 
-//  @GetMapping("/profile")
-//  public ResponseEntity<?> profile(Authentication authentication) {
+  @GetMapping("/profile")
+  public ResponseEntity<?> profile(Authentication authentication) {
 //    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //    if (authentication.getName() != "anonymousUser" && authentication != null && authentication.isAuthenticated()){
 //      return ResponseEntity.ok().body(new MessageResponse("Welcome, "+authentication.getName()+"!!"));
-//    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 //    Namee namee = new Namee();
 //      User user = (User) authentication.getPrincipal();
 //    return ResponseEntity.ok(new UserInfoResponse(userDetails.getUsername(),
@@ -68,11 +66,10 @@ public class TestController {
 //      return ResponseEntity.ok().body(new MessageResponse("Please Login to check your details"));
 
 //    }
- /*   return ResponseEntity.ok()
+    return ResponseEntity.ok()
             .body(new UserInfoResponse(
                     userDetails.getUsername(),
-                    userDetails.getEmail()*//*,
-                    userDetails.getName()*//*));
+                    userDetails.getEmail()/*,
+                    userDetails.getName()*/));
   }
 }
-*/
