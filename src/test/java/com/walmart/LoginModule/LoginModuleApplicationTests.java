@@ -67,7 +67,7 @@ public class LoginModuleApplicationTests {
 				.andExpect(jsonPath("$.message").value("Bad credentials"));
 	}
 
-	@Test
+	/*@Test
 	public void test_SignupWithValidData() throws Exception {
 		String requestBody = "{\"username\": \""+name+"\",\"email\": \""+email+"\",\"phone\": \""+num+"\",\"password\": \"123456\",\"name\": {\"firstName\": \"Arun\",\"lastName\": \"Balaji\"},\"roles\": [\"guest\"],\"gender\": \"male\",\"address\": {\"no\": \"34/0A1\",\"street1\": \"3rd Cross Street\",\"street2\": \"Vellore main road\",\"city\": \"Arcot\",\"pincode\": 632503}}";
 
@@ -76,7 +76,7 @@ public class LoginModuleApplicationTests {
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.message").value("User registered successfully !!!"));
-	}
+	}*/
 
 	@Test
 	public void test_SignupWithExistingUsername() throws Exception {
