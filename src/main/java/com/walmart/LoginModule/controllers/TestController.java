@@ -20,6 +20,19 @@ import java.util.*;
 public class TestController {
 
   private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+
+  @GetMapping("/all")
+  public String allAccess() {
+    return "Public Content.";
+  }
+
+  @GetMapping("/user")
+  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+  public String userAccess() {
+    return "User Content.";
+  }
+
+
   //GUEST role user can access this API
   @GetMapping("/guest")
   @PreAuthorize("hasRole('GUEST')")
