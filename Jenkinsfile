@@ -23,7 +23,7 @@ pipeline {
         stage('3. Build Docker Image'){
             steps{
                 script{
-                    bat 'docker build --build-arg USERNAME=%USER% --build-arg PASSWORD=%PWD% -f Dockerfile -t arunvig/jenkins_Auth_ser:latest .'
+                    bat 'docker build --build-arg USERNAME=%USER% --build-arg PASSWORD=%PWD% -f Dockerfile -t arunvig/jenkins_auth_ser:latest .'
                     }
             }
 
@@ -33,7 +33,7 @@ pipeline {
                 script{
                    bat 'docker login -u %duser% -p %dpwd%'
                 }
-                bat 'docker push arunvig/jenkins_Auth_ser:latest'
+                bat 'docker push arunvig/jenkins_auth_ser:latest'
             }
         }
     }
