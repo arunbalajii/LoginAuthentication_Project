@@ -76,7 +76,7 @@ public class AuthController {
 //            .body(new MessageResponse("Login successful !!"));
 
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-            .body(new UserInfoResponse(/*userDetails.getId(),*/
+            .body(new UserInfoResponse(userDetails.getUserId(),
                     userDetails.getUsername(),
                     userDetails.getEmail()/*,
                     roles*/));

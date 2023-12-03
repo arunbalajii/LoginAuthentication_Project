@@ -1,11 +1,12 @@
 package com.walmart.LoginModule.payload.response;
 
 import com.walmart.LoginModule.models.Namee;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 
 import java.util.List;
 
 public class UserInfoResponse {
-//    private String id;
+    private Integer userId;
     private String username;
     private String email;
 
@@ -20,8 +21,8 @@ public class UserInfoResponse {
 //    }
 //        private List<String> roles;
 
-    public UserInfoResponse( /*String id,*/String username, String email/*,Namee name*//*, List<String> roles*/) {
-       /* this.id = id;*/
+    public UserInfoResponse(Integer userId, String username, String email/*,Namee name*//*, List<String> roles*/) {
+        this.userId = userId;
         this.username = username;
         this.email = email;
 //        this.name = name;
@@ -55,4 +56,12 @@ public class UserInfoResponse {
   /*  public List<String> getRoles() {
         return roles;
     }*/
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 }

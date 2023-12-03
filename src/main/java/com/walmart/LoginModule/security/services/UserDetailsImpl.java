@@ -3,6 +3,7 @@ package com.walmart.LoginModule.security.services;
 import com.walmart.LoginModule.models.Namee;
 import com.walmart.LoginModule.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,8 @@ public class UserDetailsImpl  implements UserDetails{
 
   private String id;
 
+  private Integer userId;
+
   private String username;
 
   private String email;
@@ -27,9 +30,9 @@ public class UserDetailsImpl  implements UserDetails{
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserDetailsImpl(String id, String username, String email, String password,
+  public UserDetailsImpl(Integer userId, String username, String email, String password, //userid changed
                          Collection<? extends GrantedAuthority> authorities) {
-    this.id = id;
+    this.userId = userId;//userid changed
     this.username = username;
     this.email = email;
     this.password = password;
@@ -43,7 +46,7 @@ public class UserDetailsImpl  implements UserDetails{
             .collect(Collectors.toList());
 
     return new UserDetailsImpl(
-            user.getId(),
+            user.getUserId(), //user id changes
             user.getUsername(),
             user.getEmail(),
             user.getPassword(),
@@ -120,5 +123,13 @@ public class UserDetailsImpl  implements UserDetails{
       return false;
     UserDetailsImpl user = (UserDetailsImpl) o;
     return Objects.equals(id, user.id);
+  }
+
+  public Integer getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Integer userId) {
+    this.userId = userId;
   }
 }
