@@ -51,6 +51,7 @@ public class TestController {
 
   }
 
+  @CrossOrigin(origins = "*", allowedHeaders = "*")
   @GetMapping("/profile")
   public ResponseEntity<?> profile(Authentication authentication) {
 //    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
