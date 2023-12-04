@@ -26,7 +26,6 @@ pipeline {
                     bat 'docker build --build-arg USERNAME=%USER% --build-arg PASSWORD=%PWD% -f Dockerfile -t arunvig/jenkins_auth_ser:latest .'
                     }
             }
-
         }
         stage('4. Push to Docker Hub'){
             steps{
