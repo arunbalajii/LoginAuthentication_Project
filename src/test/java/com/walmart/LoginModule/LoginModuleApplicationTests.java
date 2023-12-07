@@ -35,7 +35,7 @@ public class LoginModuleApplicationTests {
 
 	@Test
 	public void test_ValidCredentials() throws Exception {
-		String requestBody = "{\"email\": \"arun.perumal1@gmail.com\", \"password\": \"123456\"}";
+		String requestBody = "{\"email\": \"testcase@gmail.com\", \"password\": \"123456\"}";
 
 		mockMvc.perform(post("/api/auth/signin")
 						.contentType(MediaType.APPLICATION_JSON)
@@ -80,7 +80,7 @@ public class LoginModuleApplicationTests {
 
 	@Test
 	public void test_SignupWithExistingUsername() throws Exception {
-		String requestBody = "{\"username\": \"arunperumal1\", \"email\": \"valid_email@gmail.com\", \"phone\": \"1234567890\",\"password\": \"123456\",\"gender\": \"male\"}";
+		String requestBody = "{\"username\": \"testcase\", \"email\": \"valid_email@gmail.com\", \"phone\": \"1234567890\",\"password\": \"123456\",\"gender\": \"male\"}";
 
 		mockMvc.perform(post("/api/auth/signup")
 						.content(requestBody)
@@ -91,7 +91,7 @@ public class LoginModuleApplicationTests {
 
 	@Test
 	public void test_SignupWithExistingEmail() throws Exception {
-		String requestBody = "{\"username\": \"valid_user\", \"email\": \"arun.perumal1@gmail.com\", \"phone\": \"1234567890\",\"password\": \"123456\",\"gender\": \"male\"}";
+		String requestBody = "{\"username\": \"valid_user\", \"email\": \"testcase@gmail.com\", \"phone\": \"1234567890\",\"password\": \"123456\",\"gender\": \"male\"}";
 
 		mockMvc.perform(post("/api/auth/signup")
 						.content(requestBody)
@@ -102,7 +102,7 @@ public class LoginModuleApplicationTests {
 
 	@Test
 	public void test_SignupWithExistingPhone() throws Exception {
-		String requestBody = "{\"username\": \"valid_user\", \"email\": \"valid_email@gmail.com\", \"phone\": \"9943030001\",\"password\": \"123456\",\"gender\": \"male\"}";
+		String requestBody = "{\"username\": \"valid_user\", \"email\": \"valid_email@gmail.com\", \"phone\": \"9943000000\",\"password\": \"123456\",\"gender\": \"male\"}";
 
 		mockMvc.perform(post("/api/auth/signup")
 						.content(requestBody)
@@ -115,7 +115,7 @@ public class LoginModuleApplicationTests {
 	@Test
 	public void test_SignInAndAccessPage() throws Exception {
 
-		String requestBody = "{\"email\": \"arun.perumal1@gmail.com\", \"password\": \"123456\"}";
+		String requestBody = "{\"email\": \"testcase@gmail.com\", \"password\": \"123456\"}";
 		// Sign in to get JWT token
 		MvcResult signInResult = mockMvc.perform(post("/api/auth/signin")
 						.content(requestBody)
@@ -151,7 +151,7 @@ public class LoginModuleApplicationTests {
 
 	@Test
 	public void test_AccessPageWithInvalidToken() throws Exception {
-		String requestBody = "{\"email\": \"arun.perumal1@gmail.com\", \"password\": \"123456\"}";
+		String requestBody = "{\"email\": \"testcase@gmail.com\", \"password\": \"123456\"}";
 		// Sign in to get JWT token
 		MvcResult signInResult = mockMvc.perform(post("/api/auth/signin")
 						.content(requestBody)
