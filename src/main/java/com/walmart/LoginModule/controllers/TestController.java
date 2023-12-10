@@ -95,7 +95,6 @@ public class TestController {
             .body(new UserInfoResponse(
                     userDetails.getUserId(),
                     userDetails.getUsername(),
-                    userDetails.getEmail()/*,
-                    userDetails.getName()*/));
+                    userDetails.getEmail(),"null"));
   }
 }

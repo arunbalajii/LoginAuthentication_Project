@@ -11,6 +11,7 @@ import com.walmart.LoginModule.repository.RoleRepository;
 import com.walmart.LoginModule.repository.UserRepository;
 import com.walmart.LoginModule.security.jwt.JwtUtils;
 import com.walmart.LoginModule.security.services.UserDetailsImpl;
+import jakarta.servlet.http.Cookie;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +68,9 @@ public class AuthController {
 
     ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
+//    Cookie cookie = new Cookie("Token", “XXXXX”);
+
+
     List<String> roles = userDetails.getAuthorities().stream()
             .map(item -> item.getAuthority())
             .collect(Collectors.toList());
@@ -79,8 +83,8 @@ public class AuthController {
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
             .body(new UserInfoResponse(userDetails.getUserId(),
                     userDetails.getUsername(),
-                    userDetails.getEmail()/*,
-                    roles*/));
+                    userDetails.getEmail(),
+                    jwtCookie.toString()));
 
 //    logger.error("===Comment not added to DB as the Review is not approved ===== ");
   }

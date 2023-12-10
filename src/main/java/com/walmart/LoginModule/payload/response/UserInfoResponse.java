@@ -21,12 +21,27 @@ public class UserInfoResponse {
 //    }
 //        private List<String> roles;
 
-    public UserInfoResponse(Integer userId, String username, String email/*,Namee name*//*, List<String> roles*/) {
+    public String token;
+
+//    public UserInfoResponse(Integer userId, String username, String email) {
+//        this.userId = userId;
+//        this.username = username;
+//        this.email = email;
+//    }
+
+    public UserInfoResponse(Integer userId, String username, String email, String token) {
         this.userId = userId;
         this.username = username;
         this.email = email;
-//        this.name = name;
-//        this.roles = roles;
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
 //    public String getId() {
