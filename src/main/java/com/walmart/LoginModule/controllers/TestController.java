@@ -14,20 +14,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/test")
 public class TestController {
 
   private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
-  @CrossOrigin(origins = "*", allowedHeaders = "*")
+
   @GetMapping("/all")
   public String allAccess() {
     return "Public Content.";
   }
 
-  @CrossOrigin(origins = "*", allowedHeaders = "*")
+
   @GetMapping("/user")
   @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
   public String userAccess() {
@@ -36,7 +37,7 @@ public class TestController {
 
 
   //GUEST role user can access this API
-  @CrossOrigin(origins = "*", allowedHeaders = "*")
+
   @GetMapping("/guest")
   @PreAuthorize("hasRole('GUEST')")
   public String moderatorAccess() {
@@ -51,7 +52,7 @@ public class TestController {
   }
 
   //ADMIN role user can access this API
-  @CrossOrigin(origins = "*", allowedHeaders = "*")
+
   @GetMapping("/verify_admin")
   @PreAuthorize("hasRole('ADMIN')")
   public String adminAccess1() {
@@ -61,7 +62,7 @@ public class TestController {
   }
 
   //API to identify user is logged-in or not
-  @CrossOrigin(origins = "*", allowedHeaders = "*")
+
   @GetMapping("/role")
   public ResponseEntity<MessageResponse> role() {
     Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
@@ -75,7 +76,7 @@ public class TestController {
 
   }
 
-  @CrossOrigin(origins = "*", allowedHeaders = "*")
+
   @GetMapping("/profile")
   public ResponseEntity<?> profile(Authentication authentication) {
 //    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
