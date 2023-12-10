@@ -84,11 +84,17 @@ public class AuthController {
             .body(new UserInfoResponse(userDetails.getUserId(),
                     userDetails.getUsername(),
                     userDetails.getEmail(),
-                    jwtCookie.toString()));
+                    trimstr(jwtCookie.toString())));
 
 //    logger.error("===Comment not added to DB as the Review is not approved ===== ");
   }
 
+  public String trimstr(String input){
+    if(input != null && input.contains(";")){
+      return input.substring(6,input.indexOf(";")).trim();
+    }
+    return input;
+  }
 
   @CrossOrigin(origins = "*", allowedHeaders = "*")
   @PostMapping("/signup")
