@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-//@CrossOrigin(origins = "*", maxAge = 3600)
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/test")

@@ -126,15 +126,6 @@ public class User {
     this.roles = roles;
   }
 
-//  public String getPhone() {
-//    return phone;
-//  }
-//
-//  public void setPhone(String phone) {
-//    this.phone = phone;
-//  }
-
-
   public void setId(String id) {
     this.id = id;
   }

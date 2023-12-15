@@ -63,13 +63,16 @@ public class AuthController {
 
     Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())); //getUsername
+//Authentication Provider in AM internally uses password encoder to authenticate user
+
+//    logger.info(String.valueOf(authentication));
 
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
+//    logger.error(String.valueOf(userDetails)); 620bb398
+
+
     ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
-
-//    Cookie cookie = new Cookie("Token", “XXXXX”);
-
 
     List<String> roles = userDetails.getAuthorities().stream()
             .map(item -> item.getAuthority())
@@ -77,16 +80,12 @@ public class AuthController {
 
     logger.info("Login successful !!");
 
-//    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-//            .body(new MessageResponse("Login successful !!"));
-
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
             .body(new UserInfoResponse(userDetails.getUserId(),
                     userDetails.getUsername(),
                     userDetails.getEmail(),
                     trimstr(jwtCookie.toString())));
 
-//    logger.error("===Comment not added to DB as the Review is not approved ===== ");
   }
 
   public String trimstr(String input){
